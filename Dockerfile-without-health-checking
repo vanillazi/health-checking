@@ -1,0 +1,4 @@
+FROM library/openjdk
+ADD target/health-checking-0.0.1-SNAPSHOT.jar /app.jar
+ADD checking.sh /checking.sh
+ENTRYPOINT ["java","-jar","/app.jar"]
