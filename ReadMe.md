@@ -139,6 +139,6 @@ health-checking-no-health-checking-1   no-health-checking   "java -jar /app.jar"
 容器应用的健康检查在微服务治理中扮演着重要的角色,健康检查可以为我们在服务实例监测,服务实例启动顺序提供基础支持.
 ## 参考
 1. [Dockerfile Reference HealthCheck](https://docs.docker.com/engine/reference/builder/#healthcheck)
-2. [Docker Create HealthCheck][https://docs.docker.com/engine/reference/commandline/create/]
-3. [Docker Compose Service HealthCheck][https://docs.docker.com/compose/compose-file/05-services/#healthcheck]
+2. [Docker Create HealthCheck](https://docs.docker.com/engine/reference/commandline/create/)
+3. [Docker Compose Service HealthCheck](https://docs.docker.com/compose/compose-file/05-services/#healthcheck)
 4. [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.health)
