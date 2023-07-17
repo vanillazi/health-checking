@@ -9,10 +9,10 @@
     </dependency> 
 ```
 启动程序后,我们通过curl命令查看Web应用启动状态
-``shell
+```shell
 curl http://localhost:8080/actuator/health
 {"status":"UP"}
-``
+```
 我们编制了一个需要消耗较长时间的初始化任务来试验健康检查,参考[LongTimeInitializerTask.java](./src/main/java/cn/vanillazi/learn/health/checking/task/LongTimeInitializerTask.java)
 ## 编制健康检查脚本
 Dockerfile Reference HealthCheck章节约定采用健康检查脚本进程退出状态码来表示应用的健康状态,约定如下
