@@ -1,5 +1,5 @@
-# 基于Spring Boot Web的容器应用健康检查
-这是一个用来演示容器中基于Spring Boot Web应用的健康检查示例程序,分别从镜像构建,容器创建,服务编排三个方向实现容器应用的健康检查.
+# 基于Spring Boot Web容器应用健康检查
+这是一个用来演示基于Spring Boot Web容器应用的健康检查示例程序,分别从镜像构建,容器创建,服务编排三个方向实现容器应用的健康检查.
 ## 为我们的Spring Boot Web应用添加健康检查支持
 得益于Spring的良好设计,我们只需要简单添加以下依赖,即可为我们的Web应用实现健康检查支持.
 ```xml
@@ -8,20 +8,20 @@
         <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency> 
 ```
-启动程序后,我们通过curl命令查看Web应用启动状态
+启动程序后,我们通过curl命令查看Web应用的健康状态
 ```shell
 curl http://localhost:8080/actuator/health
 {"status":"UP"}
 ```
-我们编制了一个需要消耗较长时间的初始化任务来试验健康检查,参考[LongTimeInitializerTask.java](./src/main/java/cn/vanillazi/learn/health/checking/task/LongTimeInitializerTask.java)
-## 编制健康检查脚本
+我们编写了一个需要消耗较长时间的初始化任务来试验健康检查,参考[LongTimeInitializerTask.java](./src/main/java/cn/vanillazi/learn/health/checking/task/LongTimeInitializerTask.java)
+## 编写健康检查脚本
 Dockerfile Reference HealthCheck章节约定采用健康检查脚本进程退出状态码来表示应用的健康状态,约定如下
 - 0:成功,表示容器是健康并且可用.
 - 1:不健康,表示容器没有正常工作.
 - 2:保留退出状态码,不要使用这个退出状态码.
 
-我们根据这个约定编制健康检查脚本如下:
-```shell /checking
+我们根据这个约定编写健康检查脚本如下:
+```shell title=/checking.sh
 #!/usr/bin/env bash
 
 if [ -n "$(curl -s http://localhost:8080/actuator/health | grep 'UP')" ];then
@@ -30,7 +30,8 @@ else
   exit 1
 fi
 ```
-## 配置容器健康检查
+## 容器健康检查配置
+我们可以在三个位置指定容器健康检查配置,包括Dockerfile,创建容器时,服务编排时,其中创建容器,服务编排时指定的配置会覆盖Dockerfile中指定的配置.
 ### Dockerfile中配置
 我们可以在Dockerfile中指定容器默认的健康检查配置,配置格式为
 ```shell
@@ -40,7 +41,7 @@ HEALTHCHECK [选项] CMD 检查命令
 - --interval=DURATION,容器启动后检查间隔,默认为30s
 - --timeout=DURATION,单次检查超时时间,默认为30s
 - --start-period=DURATION,容器启动时间,默认为0s
-- --start-interval=DURATION,容器启动期间,检查间隔时间,默认为5s
+- --start-interval=DURATION,容器启动期间检查间隔时间,默认为5s
 - --retries=N,报告不健康状态需要连续失败次数,默认为3
 
 容器启动后,第一次健康检查将会在interval秒后发生,以后每距离上一次检查执行完interval秒再执行一次.
