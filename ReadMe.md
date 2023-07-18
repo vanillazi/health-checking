@@ -94,6 +94,7 @@ CONTAINER ID   IMAGE               COMMAND                  CREATED          STA
    ```
 2. 构建并启动
    ```shell
+   mvn package -DskipTests
    docker build -f Dockerfile-without-health-checking -t no-health-checking .
    docker run --rm --health-cmd=/checking.sh --health-interval=3s --health-retries=3 --health-start-period=30s --health-timeout=30s --rm no-health-checking
    ```
